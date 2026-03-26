@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CoreFitness2.Application\CoreFitness2.Application.csproj" />
     <ProjectReference Include="..\CoreFitness2.Infrastructure\CoreFitness2.Infrastructure.csproj" />
   </ItemGroup>
