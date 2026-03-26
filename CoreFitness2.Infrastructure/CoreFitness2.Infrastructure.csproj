@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CoreFitness2.Application\CoreFitness2.Application.csproj" />
+    <ProjectReference Include="..\CoreFitness2.Domain\CoreFitness2.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

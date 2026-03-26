@@ -15,6 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CoreFitness2.Application\CoreFitness2.Application.csproj" />
+    <ProjectReference Include="..\CoreFitness2.Domain\CoreFitness2.Domain.csproj" />
+    <ProjectReference Include="..\CoreFitness2.Infrastructure\CoreFitness2.Infrastructure.csproj" />
+    <ProjectReference Include="..\CoreFitness2.Presentation\CoreFitness2.Presentation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
