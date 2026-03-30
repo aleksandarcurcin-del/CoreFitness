@@ -10,8 +10,7 @@
             <div class="sign-up-flex">
                 <h1>Welcome Back!</h1>
                 <p>
-                    Log in to continue your fitness journey, access your training plan,
-                    and keep track of your progress.
+                    Log in to continue your fitness journey with full access to your customized program, training history, and progress tracking. Stay consistent, monitor your development, and keep moving forward with the structure and support built into your account.
                 </p>
 
                 <div class="card__divider"></div>
@@ -38,13 +37,13 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="field">
-                        <label asp-for="Email">Email Address</label>
+                        <label asp-for="Email">Email Address *</label>
                         <input asp-for="Email" placeholder="Enter Email Address" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
                     <div class="field">
-                        <label asp-for="Password">Password</label>
+                        <label asp-for="Password">Password *</label>
                         <input asp-for="Password" type="password" placeholder="Enter Password" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
