@@ -31,7 +31,7 @@
                                 My Account
                             </a>
 
-                            <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                            <form asp-controller="Account" asp-action="Signout" method="post" style="display:inline;">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn--primary">
                                     <span class="btn__text">Sign Out</span>
@@ -42,11 +42,11 @@
                         else
                         {
                             <!-- När INTE inloggad -->
-                            <a asp-controller="Account" asp-action="SignUp" class="header-text-right">
+                            <a asp-controller="Account" asp-action="Signup" class="header-text-right">
                                 Become Member
                             </a>
 
-                            <a asp-controller="Account" asp-action="SignIn">
+                            <a asp-controller="Account" asp-action="Signin">
                                 <div class="btn btn--primary">
                                     <span class="btn__text">Sign In</span>
                                     <span class="btn__icon">›</span>
