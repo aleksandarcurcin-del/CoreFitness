@@ -1,0 +1,150 @@
+﻿@model CoreFitness2.Presentation.ViewModels.Profile.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<section class="about-me">
+    <div class="container">
+        <h1 class="about-me-h1">My Account</h1>
+
+        <div class="about-me-flex">
+
+            <!-- LEFT SIDE -->
+            <div class="about-me-left">
+                <img src="~/assets/images/about-me-image.svg" alt="Profile image">
+
+                <div class="menu-card__header">Menu Options</div>
+
+                <nav class="menu-card__body">
+                    <a class="menu-item" asp-controller="Profile" asp-action="Index">
+                        <span class="menu-item__text">About Me</span>
+                        <span class="menu-item__chev" aria-hidden="true">›</span>
+                    </a>
+
+                    <a class="menu-item" asp-controller="Membership" asp-action="Index">
+                        <span class="menu-item__text">My Membership</span>
+                        <span class="menu-item__chev" aria-hidden="true">›</span>
+                    </a>
+
+                    <a class="menu-item" href="#">
+                        <span class="menu-item__text">My Bookings</span>
+                        <span class="menu-item__chev" aria-hidden="true">›</span>
+                    </a>
+
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        @Html.AntiForgeryToken()
+                        <button class="menu-item" type="submit">
+                            <span class="menu-item__button-text">Sign Out</span>
+                            <span class="menu-item__chev" aria-hidden="true">›</span>
+                        </button>
+                    </form>
+                </nav>
+
+                <div class="menu-card__footer">
+                    <p class="menu-card__hint">If you like to cancel your account click below</p>
+                    <form asp-controller="Profile" asp-action="DeleteAccount" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="menu-card__danger">
+                            Remove Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+                <!-- RIGHT SIDE -->
+            <div class="about-me-right">
+                <h2 class="card__title">About Me</h2>
+                <div class="card__divider"></div>
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="success-message">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <form asp-action="Index" method="post" class="form" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" type="text" placeholder="Enter First Name">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="field">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" type="text" placeholder="Enter Last Name">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="field field--full">
+                            <label asp-for="Email">Email Address <span aria-hidden="true">*</span></label>
+                            <input asp-for="Email" type="email" placeholder="username@domain.com">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="field field--full">
+                            <label asp-for="PhoneNumber"></label>
+                            <input asp-for="PhoneNumber" type="tel" placeholder="Enter Phone Number">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="card__divider"></div>
+
+                    <div class="field">
+                        <label for="profileImage">Profile Image</label>
+                        <div class="upload">
+                            <input class="upload__input" id="profileImage" name="profileImage" type="file" accept="image/*">
+                            <span class="upload__fake" aria-hidden="true">Upload Profile Image</span>
+                            <span class="upload__btn" aria-hidden="true">Browse</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn--primary" type="submit">
+                            Save <span aria-hidden="true">›</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <h2 class="card__title-lower">My Statistics</h2>
+
+        <div class="about-bg-color">
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat__top">
+                        <span class="stat__label">Check-In (last 30 days)</span>
+                        <span class="stat__value">25</span>
+                    </div>
+                    <div class="bar"><div class="bar__fill" style="width: 80%"></div></div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat__top">
+                        <span class="stat__label">Weight Goal</span>
+                        <span class="stat__value">50%</span>
+                    </div>
+                    <div class="bar"><div class="bar__fill" style="width: 50%"></div></div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat__top">
+                        <span class="stat__label">Current BMI</span>
+                        <span class="stat__value">27</span>
+                    </div>
+                    <div class="bar"><div class="bar__fill" style="width: 65%"></div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
