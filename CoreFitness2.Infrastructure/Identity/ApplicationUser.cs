@@ -4,9 +4,9 @@ namespace CoreFitness2.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser
 {
-    [ProtectedPersonalData]
-    public string FirstName { get; set; } = null!;
+    
+    public string? FirstName { get; set; }
 
-    [ProtectedPersonalData]
-    public string LastName { get; set; } = null!;
+    
+    public string? LastName { get; set; }
 }

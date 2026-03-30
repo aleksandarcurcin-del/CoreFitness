@@ -32,7 +32,7 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Signup(SignUpViewModel model)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
             return View(model);
 
         return RedirectToAction(nameof(SetPassword), new {email = model.Email});
@@ -70,6 +70,33 @@ public class AccountController : Controller
         foreach (var error in result.Errors)
             ModelState.AddModelError(string.Empty, error.Description);
 
+        return View(model);
+    }
+
+
+    [HttpGet]
+    public IActionResult Signin()
+    {
+        return View(new SignInViewModel());
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Signin(SignInViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+
+        var result = await _signInManager.PasswordSignInAsync(
+            model.Email, 
+            model.Password, 
+            false, 
+            false);
+        if (result.Succeeded)
+            return RedirectToAction("Index", "Home");
+
+        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         return View(model);
     }
 }
