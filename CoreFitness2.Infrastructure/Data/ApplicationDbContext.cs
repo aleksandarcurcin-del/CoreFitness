@@ -7,6 +7,7 @@ namespace CoreFitness2.Infrastructure.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
+    public DbSet<MembershipEntity> Memberships => Set<MembershipEntity>();
     public DbSet<MembershipPlanEntity> MembershipPlans => Set<MembershipPlanEntity>();
     public DbSet<MembershipPlanFeatureEntity> MembershipPlanFeatures => Set<MembershipPlanFeatureEntity>();
 
@@ -15,6 +16,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        modelBuilder.Entity<ApplicationUser>()
+            .HasOne(x => x.Membership)
+            .WithOne()
+            .HasForeignKey<MembershipEntity>(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
 

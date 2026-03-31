@@ -17,7 +17,7 @@ public class MembershipPlanEntityConfig : IEntityTypeConfiguration<MembershipPla
             .HasPrecision(10, 2);
 
         builder.HasMany(x => x.Features)
-            .WithOne()
+            .WithOne(x => x.MembershipPlan)
             .HasForeignKey(x => x.MembershipPlanId)
             .OnDelete(DeleteBehavior.Cascade);
     }

@@ -1,6 +1,8 @@
 using CoreFitness2.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using CoreFitness2.Infrastructure.Extensions;
+using CoreFitness2.Application;
+using CoreFitness2.Infrastructure.Seeds;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(builder.
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
@@ -33,5 +36,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await MembershipSeeder.SeedAsync(context);
+}
 
 app.Run();

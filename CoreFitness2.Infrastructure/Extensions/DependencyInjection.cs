@@ -1,5 +1,7 @@
-﻿using CoreFitness2.Infrastructure.Data;
+﻿using CoreFitness2.Application.Interfaces;
+using CoreFitness2.Infrastructure.Data;
 using CoreFitness2.Infrastructure.Identity;
+using CoreFitness2.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +13,10 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        services.AddScoped<IMembershipPlanRepository, MembershipPlanRepository>();
+        services.AddScoped<IMembershipRepository, MembershipRepository>();
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 

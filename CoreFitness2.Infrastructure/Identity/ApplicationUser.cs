@@ -11,5 +11,5 @@ public class ApplicationUser : IdentityUser
     
     public string? LastName { get; set; }
 
-    public MembershipPlanEntity? MembershipPlan { get; set; }
+    public MembershipEntity? Membership { get; set; }
 }

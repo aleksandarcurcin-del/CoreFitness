@@ -1,0 +1,14 @@
+﻿using CoreFitness2.Application.Interfaces;
+using CoreFitness2.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace CoreFitness2.Application;
+
+public static class DependencyInjection
+{
+    public static IServiceCollection AddApplication(this IServiceCollection services)
+    {
+        services.AddScoped<IMembershipService, MembershipService>();
+        return services;
+    }
+}
