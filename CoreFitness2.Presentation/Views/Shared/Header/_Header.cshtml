@@ -1,16 +1,18 @@
-﻿<header>
+﻿@{
+    var isAuthenticated = User.Identity != null && User.Identity.IsAuthenticated;
+}
+
+<header>
     <div class="header-background-color">
         <div class="container2">
             <div class="header-content">
 
-                <!-- LEFT (LOGO) -->
                 <div class="header-left">
                     <a asp-controller="Home" asp-action="Index">
                         <img class="core-logo" src="~/assets/images/logotype.svg" alt="CoreFitness Logo">
                     </a>
                 </div>
 
-                    <!-- CENTER (NAV) -->
                     <div class="header-center">
                         <nav class="header-navbar">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Fitness Centers</a>
@@ -21,39 +23,29 @@
                         </nav>
                     </div>
 
-                    <!-- RIGHT (AUTH) -->
                     <div class="header-right">
-
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        @if (isAuthenticated)
                         {
-                            <!-- När inloggad -->
-                            <a asp-controller="Profile" asp-action="Index" class="header-text-right">
-                                My Account
+                            <a asp-controller="Classes" asp-action="Index" class="header-text-right">
+                                Our Classes
                             </a>
 
-                            <form asp-controller="Account" asp-action="Signout" method="post" style="display:inline;">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn--primary">
-                                    <span class="btn__text">Sign Out</span>
-                                    <span class="btn__icon">›</span>
-                                </button>
-                            </form>
+                            <a asp-controller="Profile" asp-action="Index" class="btn btn--primary">
+                                <span class="btn__text">My Account</span>
+                                <span class="btn__icon">›</span>
+                            </a>
                         }
                         else
                         {
-                            <!-- När INTE inloggad -->
                             <a asp-controller="Account" asp-action="Signup" class="header-text-right">
-                                Become Member
+                                Become a Member
                             </a>
 
-                            <a asp-controller="Account" asp-action="Signin">
-                                <div class="btn btn--primary">
-                                    <span class="btn__text">Sign In</span>
-                                    <span class="btn__icon">›</span>
-                                </div>
+                            <a asp-controller="Account" asp-action="Signin" class="btn btn--primary">
+                                <span class="btn__text">Sign In</span>
+                                <span class="btn__icon">›</span>
                             </a>
                         }
-
                     </div>
 
             </div>
