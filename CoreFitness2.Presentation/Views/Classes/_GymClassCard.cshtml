@@ -50,10 +50,14 @@
                         </div>
                     </div>
 
-                    <a class="btn btn--primary" href="#">
-                        <span class="btn__text">Book Class</span>
-                        <span class="btn__icon">›</span>
-                    </a>
+                    <form asp-controller="Bookings" asp-action="Book" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="gymClassId" value="@gymClass.Id" />
+                        <button class="btn btn--primary" type="submit">
+                            <span class="btn__text">Book Class</span>
+                            <span class="btn__icon">›</span>
+                        </button>
+                    </form>
                 </div>
 
                 <p class="class-lower-text">@gymClass.Category class</p>
