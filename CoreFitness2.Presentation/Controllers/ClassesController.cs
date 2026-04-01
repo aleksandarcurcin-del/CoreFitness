@@ -1,4 +1,5 @@
 ﻿using CoreFitness2.Application.Interfaces;
+using CoreFitness2.Presentation.ViewModels.Classes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreFitness2.Presentation.Controllers;
@@ -12,6 +13,10 @@ public class ClassesController(IGymClassService gymClassService) : Controller
     public async Task<IActionResult> Index()
     {
         var classes = await _gymClassService.GetAllAsync();
-        return View(classes);
+        var viewModel = new GymClassIndexViewModel
+        {
+            Classes = classes
+        };
+        return View(viewModel);
     }
 }
