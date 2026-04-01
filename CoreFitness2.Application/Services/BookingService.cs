@@ -1,5 +1,6 @@
 ﻿using CoreFitness2.Application.Dtos.Bookings;
 using CoreFitness2.Application.Interfaces;
+using CoreFitness2.Application.Results;
 using CoreFitness2.Domain.Entities.Bookings;
 
 namespace CoreFitness2.Application.Services;
@@ -9,27 +10,26 @@ public class BookingService(IBookingRepository bookingRepository,IGymClassReposi
     private readonly IBookingRepository _bookingRepository = bookingRepository;
     private readonly IGymClassRepository _gymClassRepository = gymClassRepository;
 
-    public async Task<bool> CreateBookingAsync(CreateBookingDto dto)
+    public async Task<ServiceResult> CreateBookingAsync(CreateBookingDto dto)
     {
         var gymClass = await _gymClassRepository.GetOneAsync(
             predicate: x => x.Id == dto.GymClassId,
             tracking: false,
-            default,
-            x => x.Bookings
+            includes: x => x.Bookings
         );
 
         if (gymClass is null)
-            return false;
+            return ServiceResult.Failure("The selected class could not be found.");
 
         var alreadyBooked = await _bookingRepository.ExistsAsync(
             x => x.UserId == dto.UserId && x.GymClassId == dto.GymClassId
         );
 
         if (alreadyBooked)
-            return false;
+            return ServiceResult.Failure("You have already booked this class.");
 
         if (gymClass.Bookings.Count >= gymClass.MaxParticipants)
-            return false;
+            return ServiceResult.Failure("This class is already full.");
 
         var booking = new BookingEntity
         {
@@ -41,7 +41,7 @@ public class BookingService(IBookingRepository bookingRepository,IGymClassReposi
         await _bookingRepository.AddAsync(booking);
         await _bookingRepository.SaveChangesAsync();
 
-        return true;
+        return ServiceResult.Success();
     }
 
     public async Task<IReadOnlyList<BookingDto>> GetUserBookingsAsync(string userId)
@@ -50,8 +50,7 @@ public class BookingService(IBookingRepository bookingRepository,IGymClassReposi
             predicate: x => x.UserId == userId,
             orderBy: query => query.OrderBy(x => x.GymClass.StartTime),
             tracking: false,
-            default,
-            x => x.GymClass
+            includes: x => x.GymClass
         );
 
         return bookings.Select(x => new BookingDto
@@ -67,7 +66,7 @@ public class BookingService(IBookingRepository bookingRepository,IGymClassReposi
         }).ToList();
     }
 
-    public async Task<bool> CancelBookingAsync(int bookingId, string userId)
+    public async Task<ServiceResult> CancelBookingAsync(int bookingId, string userId)
     {
         var booking = await _bookingRepository.GetOneAsync(
             predicate: x => x.Id == bookingId && x.UserId == userId,
@@ -75,11 +74,11 @@ public class BookingService(IBookingRepository bookingRepository,IGymClassReposi
         );
 
         if (booking is null)
-            return false;
+            return ServiceResult.Failure("The booking could not be found.");
 
         _bookingRepository.Delete(booking);
         await _bookingRepository.SaveChangesAsync();
 
-        return true;
+        return ServiceResult.Success();
     }
 }
