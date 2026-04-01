@@ -1,4 +1,6 @@
-﻿namespace CoreFitness2.Domain.Entities.Classes;
+﻿using CoreFitness2.Domain.Entities.Bookings;
+
+namespace CoreFitness2.Domain.Entities.Classes;
 
 public class GymClassEntity
 {
@@ -15,5 +17,5 @@ public class GymClassEntity
 
     public int MaxParticipants { get; set; }
 
-    
+    public ICollection<BookingEntity> Bookings { get; set; } = [];
 }
