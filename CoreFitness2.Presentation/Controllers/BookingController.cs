@@ -1,6 +1,7 @@
 ﻿using CoreFitness2.Application.Dtos.Bookings;
 using CoreFitness2.Application.Interfaces;
 using CoreFitness2.Infrastructure.Identity;
+using CoreFitness2.Presentation.ViewModels.Bookings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,6 @@ public class BookingsController(
         if (!result.Succeeded)
             TempData["BookingError"] = result.ErrorMessage;
 
-        return RedirectToAction(nameof(MyBookings));
+        return RedirectToAction("Index");
     }
 }

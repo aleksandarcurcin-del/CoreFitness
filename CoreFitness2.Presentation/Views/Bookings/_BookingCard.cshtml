@@ -1,0 +1,62 @@
+﻿@model BookingCardViewModel
+
+@{
+    var booking = Model.Booking;
+}
+
+<div class="class-card-content">
+    <div class="class-upper">
+        <img src="~/assets/images/dumbbellicon.svg" alt="">
+        <h3>@booking.GymClassName</h3>
+    </div>
+
+        <div class="class-underline"></div>
+
+        <div class="class-middle">
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@booking.Category</span>
+            </div>
+
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@booking.Instructor</span>
+            </div>
+
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@booking.StartTime.ToString("dddd, dd MMM yyyy HH:mm")</span>
+            </div>
+
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@booking.EndTime.ToString("HH:mm")</span>
+            </div>
+        </div>
+
+        <div class="card-bg-color">
+            <div class="class-lower">
+                <div class="card-grid">
+                    <div class="card-flex">
+                        <div class="class-capacity">
+                            <h4>Booked</h4>
+                            <p class="monthly">@booking.BookedAt.ToString("yyyy-MM-dd")</p>
+                        </div>
+                    </div>
+
+                    <form asp-controller="Bookings" asp-action="Cancel" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="bookingId" value="@booking.Id" />
+                        <button class="btn btn--primary" type="submit">
+                            <span class="btn__text">Cancel Booking</span>
+                            <span class="btn__icon">›</span>
+                        </button>
+                    </form>
+                </div>
+
+                <p class="class-lower-text">@booking.Category class</p>
+                <div class="class-underline2"></div>
+                <p>Instructor: @booking.Instructor</p>
+            </div>
+        </div>
+</div>

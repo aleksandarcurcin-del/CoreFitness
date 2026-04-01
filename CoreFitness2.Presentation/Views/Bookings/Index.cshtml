@@ -1,0 +1,43 @@
+﻿@model BookingIndexViewModel
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<section class="classes-offers">
+    <div class="container2">
+        <h1 class="member-h1">My Bookings</h1>
+
+        @if (TempData["BookingError"] != null)
+        {
+            <div class="text-danger">
+                @TempData["BookingError"]
+            </div>
+        }
+
+        @if (TempData["BookingSuccess"] != null)
+        {
+            <div class="success-message">
+                @TempData["BookingSuccess"]
+            </div>
+        }
+
+        @if (!Model.Bookings.Any())
+        {
+            <p>You have no bookings yet.</p>
+        }
+        else
+        {
+            <div class="membership-flex">
+                @foreach (var booking in Model.Bookings)
+                {
+                    <partial name="_BookingCard"
+                             model="new CoreFitness2.Presentation.ViewModels.Bookings.BookingCardViewModel
+                                {
+                                    Booking = booking
+                                }" />
+                }
+            </div>
+        }
+    </div>
+</section>
