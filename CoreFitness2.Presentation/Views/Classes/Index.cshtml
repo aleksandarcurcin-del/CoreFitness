@@ -2,6 +2,15 @@
 <section class="classes-offers">
     <div class="container2">
         <h1 class="member-h1">Available Classes</h1>
+        @if (TempData["BookingError"] != null)
+        {
+            <div class="text-danger">@TempData["BookingError"]</div>
+        }
+
+        @if (TempData["BookingSuccess"] != null)
+        {
+            <div class="success-message">@TempData["BookingSuccess"]</div>
+        }
 
         @if (!Model.GymClass.Any())
         {
