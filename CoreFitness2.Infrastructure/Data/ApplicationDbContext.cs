@@ -1,4 +1,5 @@
-﻿using CoreFitness2.Domain.Entities.Classes;
+﻿using CoreFitness2.Domain.Entities.Bookings;
+using CoreFitness2.Domain.Entities.Classes;
 using CoreFitness2.Domain.Entities.MembershipPlans;
 using CoreFitness2.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<MembershipPlanEntity> MembershipPlans => Set<MembershipPlanEntity>();
     public DbSet<MembershipPlanFeatureEntity> MembershipPlanFeatures => Set<MembershipPlanFeatureEntity>();
     public DbSet<GymClassEntity> GymClasses => Set<GymClassEntity>();
+    public DbSet<BookingEntity> Bookings => Set<BookingEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
