@@ -15,6 +15,25 @@ public class BookingsController(
     private readonly IBookingService _bookingService = bookingService;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
 
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user is null)
+            return Challenge();
+
+        var bookings = await _bookingService.GetUserBookingsAsync(user.Id);
+
+        var viewModel = new BookingIndexViewModel
+        {
+            Bookings = bookings
+        };
+
+        return View(viewModel);
+    }
+
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Book(int gymClassId)
@@ -36,18 +55,7 @@ public class BookingsController(
         return RedirectToAction("Index", "Classes");
     }
 
-    [HttpGet]
-    public async Task<IActionResult> MyBookings()
-    {
-        var user = await _userManager.GetUserAsync(User);
-
-        if (user is null)
-            return Challenge();
-
-        var bookings = await _bookingService.GetUserBookingsAsync(user.Id);
-        return View(bookings);
-    }
-
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Cancel(int bookingId)
