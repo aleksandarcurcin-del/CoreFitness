@@ -1,4 +1,5 @@
 ﻿using CoreFitness2.Application.Dtos.Bookings;
+using CoreFitness2.Application.Results;
 
 namespace CoreFitness2.Application.Interfaces;
 
