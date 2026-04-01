@@ -17,7 +17,7 @@
                     @Model.CurrentMembership.MembershipPlanType
                     (@Model.CurrentMembership.Status)
 
-                    <form asp-action="CancelMembership" method="post" style="margin-top: 1rem;">
+                    <form asp-action="CancelMembership" method="post" >
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn--primary">Cancel Membership</button>
                     </form>
