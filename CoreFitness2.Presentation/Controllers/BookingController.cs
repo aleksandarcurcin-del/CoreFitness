@@ -51,12 +51,18 @@ public class BookingsController(
         });
 
         if (!result.Succeeded)
+        {
             TempData["BookingError"] = result.ErrorMessage;
+        }
+        else
+        {
+            TempData["BookingSuccess"] = "You have successfully booked the class!";
+        }
 
         return RedirectToAction("Index", "Classes");
     }
 
-    
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Cancel(int bookingId)
