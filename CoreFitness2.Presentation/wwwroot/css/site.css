@@ -1254,6 +1254,13 @@ h1, h2, h3, h4, h5, h6, p {
     margin-top: 40px;
 }
 
+
+.classes-flex {
+    display: flex;
+    gap: 40px;
+    
+}
+
 /********** FOOTER **********/
 
 .footer-bg-color {
