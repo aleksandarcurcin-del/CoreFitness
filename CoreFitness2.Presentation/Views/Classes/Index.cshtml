@@ -1,25 +1,24 @@
-﻿@model IEnumerable<GymClassDto>
+﻿@model GymClassIndexViewModel
+<section class="classes-offers">
+    <div class="container2">
+        <h1 class="member-h1">Available Classes</h1>
 
-@{
-    ViewData["Title"] = "Classes";
-}
-
-<div class="container2">
-    
-    <h1>Available Classes</h1>
-    <div class="Classes-flex">
-        @if (!Model.Any())
+        @if (!Model.GymClass.Any())
         {
             <p>No classes available right now.</p>
         }
         else
         {
-            <div class="classes-list">
-                @foreach (var gymClass in Model)
+            <div class="membership-flex">
+                @foreach (var gymClass in Model.GymClass)
                 {
-                    <partial name="_GymClassCard" model="gymClass" />
+                    <partial name="_GymClassCard"
+                             model="new CoreFitness2.Presentation.ViewModels.GymClasses.GymClassCardViewModel
+                            {
+                                GymClass = gymClass
+                            }" />
                 }
             </div>
         }
     </div>
-</div>
+</section>

@@ -1,18 +1,64 @@
-﻿@model GymClassDto
+﻿@model CoreFitness2.Presentation.ViewModels.GymClasses.GymClassCardViewModel
 
-<div class="membership-card-content">
-    <div class="class-inner">
-        <h3>@Model.Name</h3>
 
-        @if (!string.IsNullOrWhiteSpace(Model.Description))
+@{
+    var gymClass = Model.GymClass;
+}
+
+<div class="class-card-content">
+    <div class="class-upper">
+        <img src="~/assets/images/dumbbellicon.svg" alt="">
+            <h3>@gymClass.Name</h3>
+        </div>
+
+        <div class="class-underline"></div>
+
+        @if (!string.IsNullOrWhiteSpace(gymClass.Description))
         {
-            <p>@Model.Description</p>
+            <p>@gymClass.Description</p>
         }
 
-        <p><strong>Category:</strong> @Model.Category</p>
-        <p><strong>Instructor:</strong> @Model.Instructor</p>
-        <p><strong>Start:</strong> @Model.StartTime</p>
-        <p><strong>End:</strong> @Model.EndTime</p>
-        <p><strong>Max participants:</strong> @Model.MaxParticipants</p>
+        <div class="class-middle">
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@gymClass.Category</span>
+            </div>
+
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@gymClass.Instructor</span>
+            </div>
+
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@gymClass.StartTime.ToString("dddd, dd MMM yyyy HH:mm")</span>
+            </div>
+
+            <div class="class-middle-content">
+                <span><img src="~/assets/images/check-icon.svg" alt=""></span>
+                <span>@gymClass.EndTime.ToString("HH:mm")</span>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="class-lower">
+                <div class="card-grid">
+                    <div class="card-flex">
+                        <div class="class-capacity">
+                            <h4>@gymClass.MaxParticipants</h4>
+                            <p class="monthly">spots</p>
+                        </div>
+                    </div>
+
+                    <a class="btn btn--primary" href="#">
+                        <span class="btn__text">Book Class</span>
+                        <span class="btn__icon">›</span>
+                    </a>
+                </div>
+
+                <p class="class-lower-text">@gymClass.Category class</p>
+                <div class="class-underline2"></div>
+                <p>Instructor: @gymClass.Instructor</p>
+            </div>
+        </div>
     </div>
-</div>

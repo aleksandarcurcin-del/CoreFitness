@@ -4,5 +4,5 @@ namespace CoreFitness2.Presentation.ViewModels.Classes;
 
 public class GymClassIndexViewModel
 {
-    public IEnumerable<GymClassDto> Classes { get; set; } = Enumerable.Empty<GymClassDto>();
+    public IEnumerable<GymClassDto> GymClass { get; set; } = Enumerable.Empty<GymClassDto>();
 }

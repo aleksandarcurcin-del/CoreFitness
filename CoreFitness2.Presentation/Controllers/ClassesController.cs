@@ -15,7 +15,7 @@ public class ClassesController(IGymClassService gymClassService) : Controller
         var classes = await _gymClassService.GetAllAsync();
         var viewModel = new GymClassIndexViewModel
         {
-            Classes = classes
+            GymClass = classes
         };
         return View(viewModel);
     }
