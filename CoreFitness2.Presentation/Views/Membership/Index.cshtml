@@ -27,7 +27,13 @@
         <div class="membership-flex">
             @foreach (var plan in Model.Plans)
             {
-                <partial name="_MembershipCard" model="plan" />
+                <partial name="_MembershipCard"
+                    model="new MembershipCardViewModel
+                    {
+                        Plan = plan,
+                        CurrentMembership = Model.CurrentMembership
+                    }" />
+                    
             }
 
             <partial name="_MembershipCallUs" />

@@ -1,18 +1,27 @@
-﻿@model MembershipPlanDto
+﻿@model MembershipCardViewModel
+@{
+    var plan = Model.Plan;
+    var current = Model.CurrentMembership;
 
+    var isAuthenticated = User.Identity != null && User.Identity.IsAuthenticated;
+    var hasMembership = current != null;
+    var isCurrentPlan = hasMembership && current!.MembershipPlanId == plan.Id;
+    var isCancelled = hasMembership && current!.Status == "Cancelled";
+}
 
 <div class="membership-card-content">
     <div class="membership-upper">
         <img src="~/assets/images/dumbbellicon.svg" alt="">
-            <h3>@Model.MembershipPlanType Membership</h3>
+        <h3>@plan.MembershipPlanType Membership</h3>
     </div>
 
     <div class="membership-underline"></div>
 
-    <p>@Model.Description</p>
+    <p>@plan.Description</p>
 
     <div class="membership-middle">
-        @foreach (var feature in Model.Features)
+        @foreach (var feature in (plan.Features ?? Enumerable.Empty<MembershipPlanFeatureDto>())
+                        .OrderBy(x => x.SortOrder))
         {
             <div class="membership-middle-content">
                 <span><img src="~/assets/images/check-icon.svg" alt=""></span>
@@ -26,34 +35,51 @@
             <div class="card-grid">
                 <div class="card-flex">
                     <div class="card-price">
-                        <h4>@Model.Price</h4>
+                        <h4>@plan.Price</h4>
                         <p class="monthly">/monthly</p>
                     </div>
                 </div>
 
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                @if (!isAuthenticated)
+                {
+                    <a class="btn btn--primary" asp-controller="Account" asp-action="SignIn">
+                        <span class="btn__text">Sign In</span>
+                        <span class="btn__icon">›</span>
+                    </a>
+                }
+                else if (!hasMembership || isCancelled)
                 {
                     <form asp-action="Select" method="post">
                         @Html.AntiForgeryToken()
-                        <input type="hidden" name="membershipPlanId" value="@Model.Id" />
-                        <button class="btn btn--primary" type="submit" id="membership-btn">
+                        <input type="hidden" name="membershipPlanId" value="@plan.Id" />
+                        <button class="btn btn--primary" type="submit">
                             <span class="btn__text">Join Now</span>
-                            <span class="btn__icon" aria-hidden="true">›</span>
+                            <span class="btn__icon">›</span>
                         </button>
                     </form>
                 }
+                else if (isCurrentPlan)
+                {
+                    <button class="btn btn--primary" disabled>
+                        <span class="btn__text">Current Plan</span>
+                    </button>
+                }
                 else
                 {
-                    <a class="btn btn--primary" asp-controller="Account" asp-action="SignIn" id="membership-btn">
-                        <span class="btn__text">Join Now</span>
-                        <span class="btn__icon" aria-hidden="true">›</span>
-                    </a>
+                    <form asp-action="ChangePlan" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="membershipPlanId" value="@plan.Id" />
+                        <button id="change-plan-btn" class="btn btn--primary" type="submit">
+                            <span class="btn__text">Change Plan</span>
+                            <span class="btn__icon">›</span>
+                        </button>
+                    </form>
                 }
             </div>
 
-            <p class="membership-lower-text">* Monthly @Model.MonthlyClassLimit Classes</p>
+            <p class="membership-lower-text">* Monthly @plan.MonthlyClassLimit Classes</p>
             <div class="membership-underline2"></div>
-            <p>Try Any Membership free for @Model.FreeTrialWeeks week(s)</p>
+            <p>Try Any Membership free for @plan.FreeTrialWeeks week(s)</p>
         </div>
     </div>
 </div>
