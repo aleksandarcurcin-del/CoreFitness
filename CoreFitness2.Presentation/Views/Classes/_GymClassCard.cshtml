@@ -1,0 +1,16 @@
+﻿@model GymClassDto
+
+<div class="class-card">
+    <h3>@Model.Name</h3>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <p>@Model.Description</p>
+    }
+
+    <p><strong>Category:</strong> @Model.Category</p>
+    <p><strong>Instructor:</strong> @Model.Instructor</p>
+    <p><strong>Start:</strong> @Model.StartTime</p>
+    <p><strong>End:</strong> @Model.EndTime</p>
+    <p><strong>Max participants:</strong> @Model.MaxParticipants</p>
+</div>

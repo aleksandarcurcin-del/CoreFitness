@@ -1,0 +1,21 @@
+﻿@model IEnumerable<GymClassDto>
+
+@{
+    ViewData["Title"] = "Classes";
+}
+
+<h1>Available Classes</h1>
+
+@if (!Model.Any())
+{
+    <p>No classes available right now.</p>
+}
+else
+{
+    <div class="classes-list">
+        @foreach (var gymClass in Model)
+        {
+            <partial name="_GymClassCard" model="gymClass" />
+        }
+    </div>
+}
