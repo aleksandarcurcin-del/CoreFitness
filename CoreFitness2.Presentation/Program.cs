@@ -41,6 +41,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await MembershipSeeder.SeedAsync(context);
+    await GymClassSeeder.SeedAsync(context);
 }
 
 app.Run();
