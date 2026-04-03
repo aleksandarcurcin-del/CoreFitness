@@ -1,44 +1,5 @@
-﻿@model CoreFitness2.Presentation.ViewModels.Account.SignUpViewModel
+﻿@{
+    ViewData["Title"] = "Sign Un";
+}
 
-<section class="sign-up">
-    <div class="container">
-        <div class="sign-up-bg-color">
-            <div class="sign-up-flex">
-                <h1>Become a Member</h1>
-                <p>Sign up to continue your fitness journey with full access to your customized program, training history, and progress tracking. Stay consistent, monitor your development, and keep moving forward with the structure and support built into your account.</p>
-                <div class="card__divider"></div>
-                <div class="sign-up-links">
-                    <button class="social-btn" type="button">
-                        <img src="~/assets/images/google.svg" alt="Google">
-                    </button>
-                    <button class="social-btn" type="button">
-                        <img src="~/assets/images/facebook.svg" alt="Facebook">
-                    </button>
-                    <button class="social-btn" type="button">
-                        <img src="~/assets/images/github.svg" alt="GitHub">
-                    </button>
-                </div>
-                <div class="card__divider divider-text">
-                    <span>OR CONTINUE WITH</span>
-                </div>
-                <form asp-action="Signup" method="post" class="form">
-                    @Html.AntiForgeryToken()
-
-                    <div class="field">
-                        <label asp-for="Email">Email Address *</label>
-                        <input asp-for="Email" placeholder="Enter Email Address" />
-                        <span asp-validation-for="Email"></span>
-                    </div>
-
-                    <div class="sign-up-lower">
-                        <button class="btn btn--primary btn--full" type="submit">
-                            <div class="continue-btn">Continue</div>
-                            <span class="btn-chev" aria-hidden="true">›</span>
-                        </button>
-                        <div class="check__text2">We will send a verification code to your email address.</div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+<partial name="_SignUpSection" />
