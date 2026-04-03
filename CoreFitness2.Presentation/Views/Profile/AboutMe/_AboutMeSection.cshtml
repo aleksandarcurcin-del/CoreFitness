@@ -1,0 +1,22 @@
+﻿@model CoreFitness2.Presentation.ViewModels.Profile.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<section class="about-me">
+    <div class="container">
+        <h1 class="about-me-h1">My Account</h1>
+
+        <div class="about-me-flex">
+
+            <!-- LEFT SIDE -->
+            <partial name="AboutMe/_AboutMeLeft" />
+
+            <!-- RIGHT SIDE -->
+            <partial name="AboutMe/_AboutMeRight" />
+        </div>
+
+        <h2 class="card__title-lower">My Statistics</h2>
+    </div>
+</section>

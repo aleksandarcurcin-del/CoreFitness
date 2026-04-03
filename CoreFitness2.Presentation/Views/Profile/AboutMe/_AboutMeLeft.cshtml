@@ -1,0 +1,43 @@
+﻿@model CoreFitness2.Presentation.ViewModels.Profile.ProfileViewModel
+
+
+<div class="about-me-left">
+    <img src="~/assets/images/about-me-image.svg" alt="Profile image">
+
+        <div class="menu-card__header">Menu Options</div>
+
+        <nav class="menu-card__body">
+            <a class="menu-item" asp-controller="Profile" asp-action="Index">
+                <span class="menu-item__text">About Me</span>
+                <span class="menu-item__chev" aria-hidden="true">›</span>
+            </a>
+
+            <a class="menu-item" asp-controller="Membership" asp-action="Index">
+                <span class="menu-item__text">My Membership</span>
+                <span class="menu-item__chev" aria-hidden="true">›</span>
+            </a>
+
+            <a class="menu-item" asp-controller="Bookings" asp-action="Index">
+                <span class="menu-item__text">My Bookings</span>
+                <span class="menu-item__chev" aria-hidden="true">›</span>
+            </a>
+
+            <form asp-controller="Account" asp-action="Signout" method="post">
+                @Html.AntiForgeryToken()
+                <button class="menu-item" type="submit">
+                    <span class="menu-item__button-text">Sign Out</span>
+                    <span class="menu-item__chev" aria-hidden="true">›</span>
+                </button>
+            </form>
+        </nav>
+
+        <div class="menu-card__footer">
+            <p class="menu-card__hint">If you like to cancel your account click below</p>
+            <form asp-controller="Profile" asp-action="DeleteAccount" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="menu-card__danger">
+                    Remove Account
+                </button>
+            </form>
+        </div>
+</div>
