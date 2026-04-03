@@ -1,4 +1,28 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+const toggles = document.querySelectorAll('.accordion-toggle');
 
-// Write your JavaScript code.
+function closeAll() {
+    toggles.forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        panel.hidden = true;
+    });
+}
+
+toggles.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        closeAll();
+        if (!isOpen) {
+            btn.setAttribute('aria-expanded', 'true');
+            document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
+        }
+    });
+});
+
+
+toggles.forEach(btn => {
+    if (btn.getAttribute('aria-expanded') === 'true') {
+        document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
+    }
+});
