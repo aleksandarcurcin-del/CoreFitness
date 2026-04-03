@@ -1,60 +1,7 @@
 ﻿@model MembershipIndexViewModel
 
 
-<section class="membership-offers">
-    <div class="container2">
-        <h1 class="member-h1">Our Membership Offers</h1>
-
-        @if (TempData["MembershipError"] != null)
-            {
-                <div class="text-danger">@TempData["MembershipError"]</div>
-            }
-
-        @if (Model.CurrentMembership != null)
-            {
-                <div class="current-membership-box">
-                    <strong>Your current membership:</strong>
-                    @Model.CurrentMembership.MembershipPlanType
-                    (@Model.CurrentMembership.Status)
-
-                    <form asp-action="CancelMembership" method="post" >
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn--primary">Cancel Membership</button>
-                    </form>
-                </div>
-            }
-
-        <div class="membership-flex">
-            @foreach (var plan in Model.Plans)
-            {
-                <partial name="_MembershipCard"
-                    model="new MembershipCardViewModel
-                    {
-                        Plan = plan,
-                        CurrentMembership = Model.CurrentMembership
-                    }" />
-                    
-            }
-
-            <partial name="_MembershipCallUs" />
-        </div>
-
-        <div class="member-trial">
-            <div class="member-trial-content">
-                <span><img src="~/assets/images/check-calendar.svg" alt=""></span>
-                <span><p>Get 30 day free trial</p></span>
-            </div>
-            <div class="member-trial-content">
-                <span><img src="~/assets/images/calendar.svg" alt=""></span>
-                <span><p>No any hidden fees pay</p></span>
-            </div>
-            <div class="member-trial-content">
-                <span><img src="~/assets/images/clock.svg" alt=""></span>
-                <span><p>You can cancel anytime</p></span>
-            </div>
-        </div>
-    </div>
-</section>
+<partial name="_MembershipSection" />
 
 <partial name="_Faq" />
 
