@@ -931,7 +931,9 @@ h1, h2, h3, h4, h5, h6, p {
     font-size: 56px;
     font-weight: 500;
     color: #0b0f19;
-    text-align: center; /* eller ta bort left helt */
+    text-align: center;
+    position: relative;
+    left: 30px;
 }
 
 
