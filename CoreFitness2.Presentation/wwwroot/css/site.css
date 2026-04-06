@@ -896,7 +896,7 @@ h1, h2, h3, h4, h5, h6, p {
 .menu-card__danger {
     font-size: 14px;
     font-weight: 700;
-    color: #e11d48; /* röd */
+    color: #e11d48;
     text-decoration: none;
 }
 
@@ -909,7 +909,7 @@ h1, h2, h3, h4, h5, h6, p {
 .profile-page__wrap {
     display: grid;
     gap: 26px;
-    max-width: 560px; /* matchar screenshot */
+    max-width: 560px;
 }
 
 .card {
@@ -927,12 +927,11 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .card__title-lower {
-    position: relative;
-    left: 500px;
     margin-top: 50px;
     font-size: 56px;
     font-weight: 500;
     color: #0b0f19;
+    text-align: center; /* eller ta bort left helt */
 }
 
 
