@@ -16,7 +16,7 @@ public class UserAccountGateway : IUserAccountGateway
     }
 
 
-    public async Task<ProfileDto> GetProfileAsync(string UserId)
+    public async Task<ProfileDto?> GetProfileAsync(string UserId)
     {
         var user = await _userManager.FindByIdAsync(UserId);
         if (user == null)
