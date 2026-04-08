@@ -2,6 +2,6 @@
 
 public class CreateBookingDto
 {
-    public string UserId { get; set; } = null!;
+    public int MemberId { get; set; }
     public int GymClassId { get; set; }
 }

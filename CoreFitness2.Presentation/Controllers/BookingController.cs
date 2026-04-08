@@ -46,7 +46,7 @@ public class BookingsController : Controller
 
         var result = await _bookingService.CreateBookingAsync(new CreateBookingDto
         {
-            UserId = userId,
+            MemberId = userId,
             GymClassId = gymClassId
         });
 

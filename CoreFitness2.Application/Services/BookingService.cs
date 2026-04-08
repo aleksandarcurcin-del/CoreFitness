@@ -22,7 +22,7 @@ public class BookingService(IBookingRepository bookingRepository,IGymClassReposi
             return ServiceResult.Failure("The selected class could not be found.");
 
         var alreadyBooked = await _bookingRepository.ExistsAsync(
-            x => x.UserId == dto.UserId && x.GymClassId == dto.GymClassId
+            x => x.UserId == dto.MemberId && x.GymClassId == dto.GymClassId
         );
 
         if (alreadyBooked)
@@ -33,7 +33,7 @@ public class BookingService(IBookingRepository bookingRepository,IGymClassReposi
 
         var booking = new BookingEntity
         {
-            UserId = dto.UserId,
+            UserId = dto.MemberId,
             GymClassId = dto.GymClassId,
             BookedAt = DateTime.UtcNow
         };
