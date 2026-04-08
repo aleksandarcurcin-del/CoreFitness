@@ -33,7 +33,7 @@ public class MembershipSeeder
             MembershipPlanType = MembershipPlanType.Premium,
             Description = "With the Premium Membership, get access to our full range of gym facilities.",
             Price = 595.00m,
-            MonthlyClassLimit = 0,
+            MonthlyClassLimit = 20,
             FreeTrialWeeks = 1,
             SortOrder = 2,
             Features =

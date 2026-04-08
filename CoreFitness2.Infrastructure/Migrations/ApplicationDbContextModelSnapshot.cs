@@ -149,7 +149,7 @@ namespace CoreFitness2.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MembershipPlans");
+                    b.ToTable("MembershipPlans", (string)null);
                 });
 
             modelBuilder.Entity("CoreFitness2.Domain.Entities.MembershipPlans.MembershipPlanFeatureEntity", b =>
@@ -172,7 +172,7 @@ namespace CoreFitness2.Infrastructure.Migrations
 
                     b.HasIndex("MembershipPlanId");
 
-                    b.ToTable("MembershipPlanFeatures");
+                    b.ToTable("MembershipPlanFeatures", (string)null);
                 });
 
             modelBuilder.Entity("CoreFitness2.Infrastructure.Identity.ApplicationUser", b =>
