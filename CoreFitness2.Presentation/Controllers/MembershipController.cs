@@ -10,10 +10,12 @@ namespace CoreFitness2.Presentation.Controllers;
 public class MembershipController : Controller
 {
     private readonly IMembershipService _membershipService;
+    private readonly IMemberService _memberService;
 
-    public MembershipController(IMembershipService membershipService)
+    public MembershipController(IMembershipService membershipService, IMemberService memberService)
     {
         _membershipService = membershipService;
+        _memberService = memberService;
     }
 
     [AllowAnonymous]
@@ -26,10 +28,15 @@ public class MembershipController : Controller
 
         if (User.Identity != null && User.Identity.IsAuthenticated)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (!string.IsNullOrWhiteSpace(userId))
-                currentMembership = await _membershipService.GetUserMembershipAsync(userId);
+            if (!string.IsNullOrWhiteSpace(applicationUserId))
+            {
+                var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+                if (member is not null)
+                    currentMembership = await _membershipService.GetMemberMembershipAsync(member.Id);
+            }
         }
 
         var model = new MembershipIndexViewModel
@@ -46,14 +53,19 @@ public class MembershipController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Select(Guid membershipPlanId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
+            return RedirectToAction("SignIn", "Account");
+
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+        if (member is null)
             return RedirectToAction("SignIn", "Account");
 
         var dto = new CreateMembershipDto
         {
-            UserId = userId,
+            MemberId = member.Id,
             MembershipPlanId = membershipPlanId
         };
 
@@ -70,12 +82,17 @@ public class MembershipController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ChangePlan(Guid membershipPlanId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
             return RedirectToAction("SignIn", "Account");
 
-        var success = await _membershipService.ChangeMembershipPlanAsync(userId, membershipPlanId);
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+        if (member is null)
+            return RedirectToAction("SignIn", "Account");
+
+        var success = await _membershipService.ChangeMembershipPlanAsync(member.Id, membershipPlanId);
 
         if (!success)
             TempData["MembershipError"] = "Could not change membership plan.";
@@ -88,12 +105,17 @@ public class MembershipController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CancelMembership()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
             return RedirectToAction("SignIn", "Account");
 
-        var success = await _membershipService.CancelMembershipAsync(userId);
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+        if (member is null)
+            return RedirectToAction("SignIn", "Account");
+
+        var success = await _membershipService.CancelMembershipAsync(member.Id);
 
         if (!success)
             TempData["MembershipError"] = "Could not cancel membership.";
