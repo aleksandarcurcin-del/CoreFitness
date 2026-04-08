@@ -1,32 +1,24 @@
-﻿using CoreFitness2.Infrastructure.Identity;
+﻿using CoreFitness2.Application.Dtos.Auth;
+using CoreFitness2.Application.Interfaces;
 using CoreFitness2.Presentation.ViewModels.Account;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreFitness2.Presentation.Controllers;
 
 public class AccountController : Controller
 {
+    private readonly IAuthService _authService;
 
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
-
-
-    public AccountController(
-        UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager)
+    public AccountController(IAuthService authService)
     {
-        _userManager = userManager;
-        _signInManager = signInManager;
+        _authService = authService;
     }
-
 
     [HttpGet]
     public IActionResult Signup()
     {
         return View(new SignUpViewModel());
     }
-
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -35,14 +27,17 @@ public class AccountController : Controller
         if (!ModelState.IsValid)
             return View(model);
 
-        return RedirectToAction(nameof(SetPassword), new {email = model.Email});
+        return RedirectToAction(nameof(SetPassword), new { email = model.Email });
     }
-
 
     [HttpGet]
     public IActionResult SetPassword(string email)
     {
-        var model = new SetPasswordViewModel { Email = email };
+        var model = new SetPasswordViewModel
+        {
+            Email = email
+        };
+
         return View(model);
     }
 
@@ -53,26 +48,20 @@ public class AccountController : Controller
         if (!ModelState.IsValid)
             return View(model);
 
-        var user = new ApplicationUser
+        var dto = new SignUpDto
         {
-            UserName = model.Email,
-            Email = model.Email
+            Email = model.Email,
+            Password = model.Password
         };
 
-        var result = await _userManager.CreateAsync(user, model.Password);
+        var result = await _authService.RegisterAsync(dto);
 
         if (result.Succeeded)
-        {
-            await _signInManager.SignInAsync(user, false);
             return RedirectToAction("Index", "Home");
-        }
 
-        foreach (var error in result.Errors)
-            ModelState.AddModelError(string.Empty, error.Description);
-
+        ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Registration failed.");
         return View(model);
     }
-
 
     [HttpGet]
     public IActionResult Signin()
@@ -87,16 +76,18 @@ public class AccountController : Controller
         if (!ModelState.IsValid)
             return View(model);
 
+        var dto = new SignInDto
+        {
+            Email = model.Email,
+            Password = model.Password
+        };
 
-        var result = await _signInManager.PasswordSignInAsync(
-            model.Email, 
-            model.Password, 
-            false, 
-            false);
+        var result = await _authService.SignInAsync(dto);
+
         if (result.Succeeded)
             return RedirectToAction("Index", "Home");
 
-        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+        ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Invalid login attempt.");
         return View(model);
     }
 
@@ -104,7 +95,7 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Signout()
     {
-        await _signInManager.SignOutAsync();
+        await _authService.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
 }
