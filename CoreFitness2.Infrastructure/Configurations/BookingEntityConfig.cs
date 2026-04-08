@@ -13,7 +13,7 @@ public class BookingEntityConfig : IEntityTypeConfiguration<BookingEntity>
 
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.UserId)
+        builder.Property(x => x.MemberId)
             .IsRequired();
 
         builder.Property(x => x.GymClassId)
@@ -22,17 +22,12 @@ public class BookingEntityConfig : IEntityTypeConfiguration<BookingEntity>
         builder.Property(x => x.BookedAt)
             .IsRequired();
 
-        builder.HasOne<ApplicationUser>()
-            .WithMany(x => x.Bookings)
-            .HasForeignKey(x => x.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasOne(x => x.GymClass)
             .WithMany(x => x.Bookings)
             .HasForeignKey(x => x.GymClassId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasIndex(x => new { x.UserId, x.GymClassId })
+        builder.HasIndex(x => new { x.MemberId, x.GymClassId })
             .IsUnique();
     }
 }
