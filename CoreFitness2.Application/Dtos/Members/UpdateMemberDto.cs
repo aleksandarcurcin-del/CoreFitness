@@ -1,6 +1,6 @@
-﻿namespace CoreFitness2.Application.Dtos.Profile;
+﻿namespace CoreFitness2.Application.Dtos.Members;
 
-public class ProfileDto
+public class UpdateMemberDto
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
