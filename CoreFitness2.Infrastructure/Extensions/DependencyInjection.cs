@@ -29,6 +29,7 @@ public static class DependencyInjection
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
+        services.AddScoped<IAuthGateway, AuthGateway>();
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IUserAccountGateway, UserAccountGateway>();
         services.AddScoped<IBookingRepository, BookingRepository>();
