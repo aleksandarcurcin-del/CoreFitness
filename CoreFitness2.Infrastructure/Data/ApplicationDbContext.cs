@@ -1,5 +1,6 @@
 ﻿using CoreFitness2.Domain.Entities.Bookings;
 using CoreFitness2.Domain.Entities.Classes;
+using CoreFitness2.Domain.Entities.Members;
 using CoreFitness2.Domain.Entities.MembershipPlans;
 using CoreFitness2.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,6 +10,7 @@ namespace CoreFitness2.Infrastructure.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
+    public DbSet<MemberEntity> Members => Set<MemberEntity>();
     public DbSet<MembershipEntity> Memberships => Set<MembershipEntity>();
     public DbSet<MembershipPlanEntity> MembershipPlans => Set<MembershipPlanEntity>();
     public DbSet<MembershipPlanFeatureEntity> MembershipPlanFeatures => Set<MembershipPlanFeatureEntity>();
@@ -22,9 +24,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
         modelBuilder.Entity<ApplicationUser>()
-            .HasOne(x => x.Membership)
+            .HasOne<MemberEntity>()
             .WithOne()
-            .HasForeignKey<MembershipEntity>(x => x.UserId)
+            .HasForeignKey<MemberEntity>(x => x.ApplicationUserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
