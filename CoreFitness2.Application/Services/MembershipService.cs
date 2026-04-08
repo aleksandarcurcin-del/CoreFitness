@@ -45,13 +45,10 @@ public class MembershipService : IMembershipService
             .ToList();
     }
 
-    public async Task<UserMembershipDto?> GetUserMembershipAsync(string userId)
+    public async Task<UserMembershipDto?> GetMemberMembershipAsync(int memberId)
     {
-        if (string.IsNullOrWhiteSpace(userId))
-            return null;
-
         var membership = await _membershipRepository.GetOneAsync(
-            x => x.UserId == userId,
+            x => x.MemberId == memberId,
             includes: x => x.MembershipPlan
         );
 
@@ -61,7 +58,7 @@ public class MembershipService : IMembershipService
         return new UserMembershipDto
         {
             Id = membership.Guid,
-            UserId = membership.UserId,
+            MemberId = membership.MemberId,
             MembershipPlanId = membership.MembershipPlanId,
             MembershipPlanType = membership.MembershipPlan.MembershipPlanType.ToString(),
             Status = membership.Status,
@@ -71,7 +68,7 @@ public class MembershipService : IMembershipService
 
     public async Task<bool> CreateMembershipAsync(CreateMembershipDto dto)
     {
-        if (string.IsNullOrWhiteSpace(dto.UserId))
+        if (dto.MemberId <= 0)
             return false;
 
         var selectedPlan = await _membershipPlanRepository.GetOneAsync(
@@ -83,7 +80,7 @@ public class MembershipService : IMembershipService
             return false;
 
         var existingMembership = await _membershipRepository.GetOneAsync(
-            x => x.UserId == dto.UserId,
+            x => x.MemberId == dto.MemberId,
             tracking: true
         );
 
@@ -92,7 +89,7 @@ public class MembershipService : IMembershipService
             var membership = new MembershipEntity
             {
                 Guid = Guid.NewGuid(),
-                UserId = dto.UserId,
+                MemberId = dto.MemberId,
                 MembershipPlanId = dto.MembershipPlanId,
                 StartDate = DateTime.UtcNow,
                 Status = "Active"
@@ -116,13 +113,13 @@ public class MembershipService : IMembershipService
         return false;
     }
 
-    public async Task<bool> ChangeMembershipPlanAsync(string userId, Guid newPlanId)
+    public async Task<bool> ChangeMembershipPlanAsync(int memberId, Guid newPlanId)
     {
-        if (string.IsNullOrWhiteSpace(userId))
+        if (memberId <= 0)
             return false;
 
         var membership = await _membershipRepository.GetOneAsync(
-            x => x.UserId == userId,
+            x => x.MemberId == memberId,
             tracking: true,
             includes: x => x.MembershipPlan
         );
@@ -151,13 +148,13 @@ public class MembershipService : IMembershipService
         return true;
     }
 
-    public async Task<bool> CancelMembershipAsync(string userId)
+    public async Task<bool> CancelMembershipAsync(int memberId)
     {
-        if (string.IsNullOrWhiteSpace(userId))
+        if (memberId <= 0)
             return false;
 
         var membership = await _membershipRepository.GetOneAsync(
-            x => x.UserId == userId,
+            x => x.MemberId == memberId,
             tracking: true
         );
 

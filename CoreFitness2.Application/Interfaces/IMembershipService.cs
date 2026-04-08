@@ -8,11 +8,11 @@ public interface IMembershipService
         Task<bool> CreateMembershipAsync(CreateMembershipDto dto);
         Task<List<MembershipPlanDto>> GetAllPlansAsync();
 
-        Task<UserMembershipDto?> GetUserMembershipAsync(string userId);
+        Task<UserMembershipDto?> GetMemberMembershipAsync(int memberId);
 
-        Task<bool> ChangeMembershipPlanAsync(string userId, Guid newPlanId);
+        Task<bool> ChangeMembershipPlanAsync(int memberId, Guid newPlanId);
 
-        Task<bool> CancelMembershipAsync(string userId);
+        Task<bool> CancelMembershipAsync(int memberId);
     
 
 }
