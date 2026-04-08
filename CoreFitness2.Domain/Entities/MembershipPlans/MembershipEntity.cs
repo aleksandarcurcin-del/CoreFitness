@@ -4,7 +4,7 @@ public class MembershipEntity
 {
     public Guid Guid { get; set; }
 
-    public string UserId { get; set; } = null!;
+    public int MemberId { get; set; }
     public Guid MembershipPlanId { get; set; }
 
     public DateTime StartDate { get; set; }
