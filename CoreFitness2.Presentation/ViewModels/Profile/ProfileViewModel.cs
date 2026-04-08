@@ -15,4 +15,8 @@ public class ProfileViewModel
 
     public string? PhoneNumber { get; set; }
 
+    public IFormFile? ProfileImage { get; set; }
+
+    public string? ExistingProfileImageUrl { get; set; }
+
 }
