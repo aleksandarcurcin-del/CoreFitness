@@ -58,6 +58,7 @@ public class MemberService : IMemberService
         member.LastName = dto.LastName;
         member.Email = dto.Email;
         member.PhoneNumber = dto.PhoneNumber;
+        member.ProfileImageUrl = dto.ProfileImageUrl;
 
         await _memberRepository.SaveChangesAsync();
 
