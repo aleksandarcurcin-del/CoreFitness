@@ -45,12 +45,13 @@
         <div class="card__divider"></div>
 
         <div class="field">
-            <label for="profileImage">Profile Image</label>
+            <label asp-for="ProfileImage">Profile Image</label>
             <div class="upload">
-                <input class="upload__input" id="profileImage" name="profileImage" type="file" accept="image/*">
+                <input asp-for="ProfileImage" class="upload__input" type="file" accept="image/*">
                 <span class="upload__fake" aria-hidden="true">Upload Profile Image</span>
                 <span class="upload__btn" aria-hidden="true">Browse</span>
             </div>
+            <span asp-validation-for="ProfileImage" class="text-danger"></span>
         </div>
 
         <div class="form-actions">
