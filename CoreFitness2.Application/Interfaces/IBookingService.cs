@@ -6,6 +6,6 @@ namespace CoreFitness2.Application.Interfaces;
 public interface IBookingService
 {
     Task<ServiceResult> CreateBookingAsync(CreateBookingDto dto);
-    Task<IReadOnlyList<BookingDto>> GetUserBookingsAsync(string userId);
-    Task<ServiceResult> CancelBookingAsync(int bookingId, string userId);
+    Task<IReadOnlyList<BookingDto>> GetMemberBookingsAsync(int memberId);
+    Task<ServiceResult> CancelBookingAsync(int bookingId, int memberId);
 }
