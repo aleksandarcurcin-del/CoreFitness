@@ -3,7 +3,7 @@
 public class UserMembershipDto
 {
     public Guid Id { get; set; }
-    public string UserId { get; set; } = null!;
+    public int MemberId { get; set; }
     public Guid MembershipPlanId { get; set; }
     public string MembershipPlanType { get; set; } = null!;
     public string Status { get; set; } = null!;

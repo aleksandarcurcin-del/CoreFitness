@@ -2,7 +2,7 @@
 
 public class CreateMembershipDto
 {
-    public string UserId { get; set; } = null!;
+    public int MemberId { get; set; }
 
     public Guid MembershipPlanId { get; set; }
 }
