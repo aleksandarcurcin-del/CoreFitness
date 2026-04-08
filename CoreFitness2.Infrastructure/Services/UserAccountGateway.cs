@@ -1,5 +1,4 @@
-﻿using CoreFitness2.Application.Dtos.Profile;
-using CoreFitness2.Application.Interfaces;
+﻿using CoreFitness2.Application.Interfaces;
 using CoreFitness2.Application.Results;
 using CoreFitness2.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -15,59 +14,18 @@ public class UserAccountGateway : IUserAccountGateway
         _userManager = userManager;
     }
 
-
-    public async Task<ProfileDto?> GetProfileAsync(string UserId)
+    public async Task<ServiceResult> DeleteIdentityUserAsync(string applicationUserId)
     {
-        var user = await _userManager.FindByIdAsync(UserId);
+        var user = await _userManager.FindByIdAsync(applicationUserId);
         if (user == null)
-            return null;
-
-        return new ProfileDto
-        {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email ?? string.Empty,
-            PhoneNumber = user.PhoneNumber
-        };
-    }
-
-    public async Task<ServiceResult> UpdateProfileAsync(string UserId, UpdateProfileDto dto)
-    {
-        var user = await _userManager.FindByIdAsync(UserId);
-        if (user == null)
-            return ServiceResult.Failure("User not found.");
-
-
-        user.FirstName = dto.FirstName;
-        user.LastName = dto.LastName;
-        user.Email = dto.Email;
-        user.UserName = dto.Email;
-        user.PhoneNumber = dto.PhoneNumber;
-
-        var result = await _userManager.UpdateAsync(user);  
-
-        if (result.Succeeded)
-            return ServiceResult.Success();
-
-        var firstError = result.Errors.FirstOrDefault()?.Description ?? "Profile update failed.";
-        return ServiceResult.Failure(firstError);
-    }
-
-
-    public async Task<ServiceResult> DeleteProfileAsync(string UserId)
-    {
-        var user = await _userManager.FindByIdAsync(UserId);
-        if (user == null)
-            return ServiceResult.Failure("User not found.");
+            return ServiceResult.Failure("Identity user was not found.");
 
         var result = await _userManager.DeleteAsync(user);
 
         if (result.Succeeded)
             return ServiceResult.Success();
 
-        var firstError = result.Errors.FirstOrDefault()?.Description ?? "Profile deletion failed.";
+        var firstError = result.Errors.FirstOrDefault()?.Description ?? "Could not delete identity user.";
         return ServiceResult.Failure(firstError);
     }
-
-    
 }
