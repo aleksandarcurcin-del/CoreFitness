@@ -31,6 +31,12 @@ public class MemberEntityConfig : IEntityTypeConfiguration<MemberEntity>
         builder.Property(x => x.ProfileImageUrl)
             .HasMaxLength(500);
 
+        builder.Property(x => x.CreatedAt)
+            .IsRequired();
+
+        builder.Property(x => x.UpdatedAt)
+            .IsRequired();
+
         builder.HasIndex(x => x.ApplicationUserId)
             .IsUnique();
     }
