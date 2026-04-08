@@ -11,21 +11,28 @@ namespace CoreFitness2.Presentation.Controllers;
 public class BookingsController : Controller
 {
     private readonly IBookingService _bookingService;
+    private readonly IMemberService _memberService;
 
-    public BookingsController(IBookingService bookingService)
+    public BookingsController(IBookingService bookingService, IMemberService memberService)
     {
         _bookingService = bookingService;
+        _memberService = memberService;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
             return Challenge();
 
-        var bookings = await _bookingService.GetUserBookingsAsync(userId);
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+        if (member is null)
+            return Challenge();
+
+        var bookings = await _bookingService.GetMemberBookingsAsync(member.Id);
 
         var viewModel = new BookingIndexViewModel
         {
@@ -39,14 +46,19 @@ public class BookingsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Book(int gymClassId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
+            return Challenge();
+
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+        if (member is null)
             return Challenge();
 
         var result = await _bookingService.CreateBookingAsync(new CreateBookingDto
         {
-            MemberId = userId,
+            MemberId = member.Id,
             GymClassId = gymClassId
         });
 
@@ -62,12 +74,17 @@ public class BookingsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Cancel(int bookingId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
             return Challenge();
 
-        var result = await _bookingService.CancelBookingAsync(bookingId, userId);
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+        if (member is null)
+            return Challenge();
+
+        var result = await _bookingService.CancelBookingAsync(bookingId, member.Id);
 
         if (!result.Succeeded)
             TempData["BookingError"] = result.ErrorMessage;
