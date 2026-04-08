@@ -1,4 +1,4 @@
-﻿using CoreFitness2.Application.Dtos.Profile;
+﻿using CoreFitness2.Application.Dtos.Members;
 using CoreFitness2.Application.Interfaces;
 using CoreFitness2.Presentation.ViewModels.Profile;
 using Microsoft.AspNetCore.Authentication;
@@ -12,32 +12,32 @@ namespace CoreFitness2.Presentation.Controllers;
 [Authorize]
 public class ProfileController : Controller
 {
-    private readonly IProfileService _profileService;
+    private readonly IMemberService _memberService;
 
-    public ProfileController(IProfileService profileService)
+    public ProfileController(IMemberService memberService)
     {
-        _profileService = profileService;
+        _memberService = memberService;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
             return RedirectToAction("Signin", "Account");
 
-        var profile = await _profileService.GetProfileAsync(userId);
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
 
-        if (profile == null)
+        if (member == null)
             return RedirectToAction("Signin", "Account");
 
         var model = new ProfileViewModel
         {
-            FirstName = profile.FirstName,
-            LastName = profile.LastName,
-            Email = profile.Email,
-            PhoneNumber = profile.PhoneNumber
+            FirstName = member.FirstName,
+            LastName = member.LastName,
+            Email = member.Email,
+            PhoneNumber = member.PhoneNumber
         };
 
         return View(model);
@@ -50,12 +50,12 @@ public class ProfileController : Controller
         if (!ModelState.IsValid)
             return View(model);
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
             return RedirectToAction("Signin", "Account");
 
-        var dto = new UpdateProfileDto
+        var dto = new UpdateMemberDto
         {
             FirstName = model.FirstName,
             LastName = model.LastName,
@@ -63,7 +63,7 @@ public class ProfileController : Controller
             PhoneNumber = model.PhoneNumber
         };
 
-        var result = await _profileService.UpdateProfileAsync(userId, dto);
+        var result = await _memberService.UpdateAsync(applicationUserId, dto);
 
         if (result.Succeeded)
         {
@@ -79,12 +79,12 @@ public class ProfileController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteAccount()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var applicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(applicationUserId))
             return RedirectToAction("Signin", "Account");
 
-        var result = await _profileService.DeleteProfileAsync(userId);
+        var result = await _memberService.DeleteAsync(applicationUserId);
 
         if (!result.Succeeded)
         {
