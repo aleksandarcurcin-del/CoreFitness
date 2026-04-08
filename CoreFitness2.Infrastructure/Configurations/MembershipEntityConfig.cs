@@ -10,25 +10,28 @@ public class MembershipEntityConfig : IEntityTypeConfiguration<MembershipEntity>
     {
         builder.ToTable("Memberships");
 
-        builder.HasKey(x => x.UserId);
+        builder.HasKey(x => x.Guid);
 
-        builder.Property(x => x.UserId)
+        builder.Property(x => x.MemberId)
+            .IsRequired();
+
+        builder.Property(x => x.MembershipPlanId)
+            .IsRequired();
+
+        builder.Property(x => x.StartDate)
             .IsRequired();
 
         builder.Property(x => x.Status)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property (x => x.StartDate)
-            .IsRequired();
-
-        builder.HasIndex(x => x.UserId)
-            .IsUnique();
-
         builder.HasOne(x => x.MembershipPlan)
             .WithMany()
             .HasForeignKey(x => x.MembershipPlanId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(x => x.MemberId)
+            .IsUnique();
 
     }
 }
