@@ -13,10 +13,12 @@ namespace CoreFitness2.Presentation.Controllers;
 public class ProfileController : Controller
 {
     private readonly IMemberService _memberService;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public ProfileController(IMemberService memberService)
+    public ProfileController(IMemberService memberService, IWebHostEnvironment webHostEnvironment)
     {
         _memberService = memberService;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]
@@ -37,7 +39,8 @@ public class ProfileController : Controller
             FirstName = member.FirstName,
             LastName = member.LastName,
             Email = member.Email,
-            PhoneNumber = member.PhoneNumber
+            PhoneNumber = member.PhoneNumber,
+            ExistingProfileImageUrl = member.ProfileImageUrl
         };
 
         return View(model);
@@ -55,12 +58,37 @@ public class ProfileController : Controller
         if (string.IsNullOrWhiteSpace(applicationUserId))
             return RedirectToAction("Signin", "Account");
 
+        var member = await _memberService.GetByApplicationUserIdAsync(applicationUserId);
+
+        if (member == null)
+            return RedirectToAction("Signin", "Account");
+
+        string? profileImageUrl = member.ProfileImageUrl;
+
+        if (model.ProfileImage != null && model.ProfileImage.Length > 0)
+        {
+            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "profiles");
+
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            var fileExtension = Path.GetExtension(model.ProfileImage.FileName);
+            var fileName = $"{Guid.NewGuid()}{fileExtension}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await model.ProfileImage.CopyToAsync(stream);
+
+            profileImageUrl = $"/images/profiles/{fileName}";
+        }
+
         var dto = new UpdateMemberDto
         {
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email,
-            PhoneNumber = model.PhoneNumber
+            PhoneNumber = model.PhoneNumber,
+            ProfileImageUrl = profileImageUrl
         };
 
         var result = await _memberService.UpdateAsync(applicationUserId, dto);
