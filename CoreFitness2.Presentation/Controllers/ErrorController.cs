@@ -5,7 +5,7 @@ namespace CoreFitness2.Presentation.Controllers;
 public class ErrorController : Controller
 {
     [Route("Error/{statusCode}")]
-    public IActionResult NotFound(int statusCode)
+    public IActionResult ErrorHandler(int statusCode)
     {
         return statusCode switch
         {
