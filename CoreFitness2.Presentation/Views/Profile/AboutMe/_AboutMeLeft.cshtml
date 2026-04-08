@@ -2,7 +2,12 @@
 
 
 <div class="about-me-left">
-    <img src="~/assets/images/about-me-image.svg" alt="Profile image">
+    @if (!string.IsNullOrWhiteSpace(Model.ExistingProfileImageUrl))
+    {
+        <div class="profile-image-preview">
+            <img src="@Model.ExistingProfileImageUrl" alt="Profile image" />
+        </div>
+    }
 
         <div class="menu-card__header">Menu Options</div>
 
