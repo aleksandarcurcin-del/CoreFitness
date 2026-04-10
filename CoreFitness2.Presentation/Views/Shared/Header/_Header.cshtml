@@ -17,7 +17,18 @@
                         <nav class="header-navbar">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Fitness Centers</a>
                             <a class="nav-link" asp-controller="Membership" asp-action="Index">Memberships</a>
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Training</a>
+                            <div class="nav-dropdown">
+                                <button type="button" class="nav-link nav-dropdown-toggle" id="trainingToggle">
+                                    Training
+                                    <span class="dropdown-arrow">^</span>
+                                </button>
+
+                                <div class="nav-dropdown-menu" id="trainingMenu">
+                                    <a asp-controller="Training" asp-action="PersonalTraining">Personal Training</a>
+                                    <a asp-controller="Training" asp-action="GroupTraining">Group Training</a>
+                                    <a asp-controller="Training" asp-action="Padel">Padel</a>
+                                </div>
+                            </div>
                             <a class="nav-link" asp-controller="Support" asp-action="Index">Customer Service</a>
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Store</a>
                         </nav>

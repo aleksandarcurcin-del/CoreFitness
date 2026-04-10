@@ -26,3 +26,23 @@ toggles.forEach(btn => {
         document.getElementById(btn.getAttribute('aria-controls')).hidden = false;
     }
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const trainingDropdown = document.querySelector(".nav-dropdown");
+    const trainingToggle = document.getElementById("trainingToggle");
+
+    if (!trainingDropdown || !trainingToggle) return;
+
+    trainingToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        trainingDropdown.classList.toggle("open");
+    });
+
+    document.addEventListener("click", function (e) {
+        if (!trainingDropdown.contains(e.target)) {
+            trainingDropdown.classList.remove("open");
+        }
+    });
+});
