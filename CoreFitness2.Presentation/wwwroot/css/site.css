@@ -667,23 +667,30 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 
-.customer-service-bg {
-    background-color: #FFFFFF;
-    height: 787px;
-}
 
 .customer-service-content {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
 }
+
+.customer-service-left {
+    position: relative;
+    
+}
+
+    .customer-service-left img {
+  
+        height:848px;
+    }
 
 .customer-contact {
     display: flex;
     justify-content: center;
     background-color: #404040a4;
-    position: relative;
-    bottom: 200px;
-    left: 40px;
+    position: absolute;
+    bottom: 0px;
+    left: 350px;
     width: 531px;
     gap: 20px;
     backdrop-filter: blur(10px);
@@ -723,10 +730,14 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .customer-service-right {
+    
     display: flex;
     flex-direction: column;
     gap: 30px;
+    
+    background-color: #ffffff;
     padding: 50px;
+    border-radius: 0 20px 20px 0;
 
     h2 {
         font-size: 28px;
@@ -788,9 +799,7 @@ h1, h2, h3, h4, h5, h6, p {
     }
 
 #customer-service-btn {
-    justify-self: start;
-    margin-top: 30px;
-    text-decoration: none;
+    max-width: 205px;
 }
 
 

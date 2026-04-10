@@ -1,0 +1,106 @@
+﻿@model CoreFitness2.Presentation.ViewModels.Support.CustomerServiceViewModel
+
+<section class="customer-service">
+    <div class="container">
+        <h1 class="customer-service-h1">Customer Service</h1>
+
+        <div class="customer-service-bg">
+            <div class="customer-service-content">
+
+                <div class="customer-service-left">
+                    <div class="customer-service-image">
+                        <img src="~/assets/images/customerservice-image.svg" alt="Customer service">
+                    </div>
+                        
+                </div>
+
+                <div class="customer-service-right">
+                    <h2>Contact Us Today</h2>
+                    <p>
+                        Ready to begin your fitness journey? Contact GymPro today and let our expert trainers
+                        guide you with the right program and support.
+                    </p>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="success-message">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="text-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    <form asp-action="Index" asp-controller="Support" method="post" class="contact-form">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="customer-service-form-grid">
+                            <div class="field">
+                                <label asp-for="FirstName">First Name <span aria-hidden="true">*</span></label>
+                                <input asp-for="FirstName" type="text" placeholder="Enter First Name">
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <div class="field">
+                                <label asp-for="LastName">Last Name <span aria-hidden="true">*</span></label>
+                                <input asp-for="LastName" type="text" placeholder="Enter Last Name">
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+                            <div class="field">
+                                <label asp-for="Email">Email Address <span aria-hidden="true">*</span></label>
+                                <input asp-for="Email" type="email" placeholder="Enter Email Address">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="field">
+                                <label asp-for="PhoneNumber">Phone Number</label>
+                                <input asp-for="PhoneNumber" type="tel" placeholder="Enter Phone Number">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="field field--full">
+                                <label asp-for="Message">Message <span aria-hidden="true">*</span></label>
+                                <textarea asp-for="Message" rows="5" placeholder="Message..."></textarea>
+                                <span asp-validation-for="Message" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn--primary" type="submit" id="customer-service-btn">
+                            <span class="btn__text">Submit Message</span>
+                            <span class="btn__icon" aria-hidden="true">›</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="customer-contact">
+            <div class="customer-inner-contact">
+                <div class="customer-circle1">
+                <img src="~/assets/images/phone.svg" alt="phone">
+                </div>
+                <div class="customer-contact-contact">
+                    <p>Phone Number</p>
+                    <p class="customer-info">+(46) 8 410 521 00</p>
+                </div>
+            </div>
+
+                <div class="customer-inner-contact">
+                    <div class="customer-circle2">
+                    <img src="~/assets/images/mail.svg" alt="mail">
+                    </div>
+                    <div class="customer-contact-contact">
+                        <p>Email Address</p>
+                        <p class="customer-info">info@corefitness.se</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
