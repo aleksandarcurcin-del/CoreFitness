@@ -35,6 +35,11 @@ public class AuthGateway : IAuthGateway
             return (ServiceResult.Failure(firstError), null);
         }
 
+        var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+        if (!roleResult.Succeeded)
+            return (ServiceResult.Failure("Failed to assign role"), null);
+
         await _signInManager.SignInAsync(user, false);
 
         return (ServiceResult.Success(), user.Id);
