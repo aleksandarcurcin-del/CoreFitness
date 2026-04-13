@@ -1,5 +1,6 @@
 ﻿using CoreFitness2.Application.Dtos.Classes;
 using CoreFitness2.Application.Interfaces;
+using CoreFitness2.Application.Results;
 using CoreFitness2.Domain.Entities.Classes;
 
 namespace CoreFitness2.Application.Services;
@@ -30,7 +31,7 @@ public class GymClassService(IGymClassRepository gymClassRepository) : IGymClass
         return entity is null ? null : MapToDto(entity);
     }
 
-    public async Task<GymClassDto> CreateAsync(CreateGymClassDto dto)
+    public async Task<ServiceResult> CreateAsync(CreateGymClassDto dto)
     {
         var entity = new GymClassEntity
         {
@@ -46,10 +47,10 @@ public class GymClassService(IGymClassRepository gymClassRepository) : IGymClass
         await _gymClassRepository.AddAsync(entity);
         await _gymClassRepository.SaveChangesAsync();
 
-        return MapToDto(entity);
+        return ServiceResult.Success();
     }
 
-    public async Task<bool> UpdateAsync(UpdateGymClassDto dto)
+    public async Task<ServiceResult> UpdateAsync(UpdateGymClassDto dto)
     {
         var entity = await _gymClassRepository.GetOneAsync(
             predicate: x => x.Id == dto.Id,
@@ -57,7 +58,7 @@ public class GymClassService(IGymClassRepository gymClassRepository) : IGymClass
         );
 
         if (entity is null)
-            return false;
+            return ServiceResult.Failure("Class Not Found.");
 
         entity.Name = dto.Name;
         entity.Description = dto.Description;
@@ -68,10 +69,10 @@ public class GymClassService(IGymClassRepository gymClassRepository) : IGymClass
         entity.MaxParticipants = dto.MaxParticipants;
 
         await _gymClassRepository.SaveChangesAsync();
-        return true;
+        return ServiceResult.Success();
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<ServiceResult> DeleteAsync(int id)
     {
         var entity = await _gymClassRepository.GetOneAsync(
             predicate: x => x.Id == id,
@@ -79,12 +80,12 @@ public class GymClassService(IGymClassRepository gymClassRepository) : IGymClass
         );
 
         if (entity is null)
-            return false;
+            return ServiceResult.Failure("Class not found.");
 
         _gymClassRepository.Delete(entity);
         await _gymClassRepository.SaveChangesAsync();
 
-        return true;
+        return ServiceResult.Success();
     }
 
     private static GymClassDto MapToDto(GymClassEntity entity)
