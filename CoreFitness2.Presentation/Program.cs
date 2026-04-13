@@ -50,7 +50,7 @@ using (var scope = app.Services.CreateScope())
     await MembershipSeeder.SeedAsync(context);
     await GymClassSeeder.SeedAsync(context);
     await RoleSeeder.SeedAsync(roleManager);
-    await AdminSeeder.SeedAdminAsync(userManager, roleManager);
+    await AdminSeeder.SeedAdminAsync(userManager, context);
 }
 
 app.Run();
