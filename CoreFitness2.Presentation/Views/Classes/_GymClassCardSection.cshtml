@@ -1,0 +1,50 @@
+﻿@model GymClassIndexViewModel
+<section class="classes-offers">
+    <div class="container2">
+        <h1 class="member-h1">Available Classes</h1>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-controller="Classes" asp-action="Create" class="btn btn--primary">
+                
+                <p>Create a new gym class</p>
+            </a>
+        }
+        @if (TempData["ClassErrorMessage"] != null)
+        {
+            <div class="text-danger">@TempData["ClassErrorMessage"]</div>
+        }
+
+        @if (TempData["ClassSuccessMessage"] != null)
+        {
+            <div class="success-message">@TempData["ClassSuccessMessage"]</div>
+        }
+        @if (TempData["BookingError"] != null)
+        {
+            <div class="text-danger">@TempData["BookingError"]</div>
+        }
+
+        @if (TempData["BookingSuccess"] != null)
+        {
+            <div class="success-message">@TempData["BookingSuccess"]</div>
+        }
+
+        @if (!Model.GymClass.Any())
+        {
+            <p>No classes available right now.</p>
+        }
+        else
+        {
+            <div class="membership-flex">
+                @foreach (var gymClass in Model.GymClass)
+                {
+                    <partial name="_GymClassCard"
+                             model="new CoreFitness2.Presentation.ViewModels.GymClasses.GymClassCardViewModel
+                                                 {
+                                                     GymClass = gymClass
+                                                 }" />
+                }
+            </div>
+            
+        }
+    </div>
+</section>

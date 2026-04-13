@@ -59,7 +59,7 @@ public class ClassesController(IGymClassService gymClassService) : Controller
             return View(model);
         }
 
-        TempData["SuccessMessage"] = "Class created successfully.";
+        TempData["ClassSuccessMessage"] = "Class created successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -72,11 +72,11 @@ public class ClassesController(IGymClassService gymClassService) : Controller
 
         if (!result.Succeeded)
         {
-            TempData["ErrorMessage"] = result.ErrorMessage ?? "Could not delete class.";
+            TempData["ClassErrorMessage"] = result.ErrorMessage ?? "Could not delete class.";
             return RedirectToAction(nameof(Index));
         }
 
-        TempData["SuccessMessage"] = "Class deleted successfully.";
+        TempData["ClassSuccessMessage"] = "Class deleted successfully.";
         return RedirectToAction(nameof(Index));
     }
 }

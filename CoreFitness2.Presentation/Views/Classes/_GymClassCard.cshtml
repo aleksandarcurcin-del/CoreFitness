@@ -50,14 +50,28 @@
                         </div>
                     </div>
 
-                    <form asp-controller="Bookings" asp-action="Book" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="gymClassId" value="@gymClass.Id" />
-                        <button class="btn btn--primary" type="submit">
-                            <span class="btn__text">Book Class</span>
-                            <span class="btn__icon">›</span>
-                        </button>
-                    </form>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <form asp-controller="Classes" asp-action="Delete" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@gymClass.Id" />
+                            <button class="btn btn--primary" type="submit">
+                                <span class="btn__text">Delete Class</span>
+                                <span class="btn__icon">›</span>
+                            </button>
+                        </form>
+                    }
+                    else if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Bookings" asp-action="Book" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="gymClassId" value="@gymClass.Id" />
+                            <button class="btn btn--primary" type="submit">
+                                <span class="btn__text">Book Class</span>
+                                <span class="btn__icon">›</span>
+                            </button>
+                        </form>
+                    }
                 </div>
 
                 <p class="class-lower-text">@gymClass.Category class</p>

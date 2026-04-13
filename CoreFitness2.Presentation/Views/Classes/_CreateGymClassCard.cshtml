@@ -1,0 +1,52 @@
+﻿@model CoreFitness2.Presentation.ViewModels.Classes.CreateGymClassViewModel
+
+
+<h1>Create Class</h1>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <div>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+
+    <div>
+        <label asp-for="Category"></label>
+        <input asp-for="Category" />
+        <span asp-validation-for="Category"></span>
+    </div>
+
+    <div>
+        <label asp-for="Instructor"></label>
+        <input asp-for="Instructor" />
+        <span asp-validation-for="Instructor"></span>
+    </div>
+
+    <div>
+        <label asp-for="StartTime"></label>
+        <input asp-for="StartTime" type="datetime-local" />
+        <span asp-validation-for="StartTime"></span>
+    </div>
+
+    <div>
+        <label asp-for="EndTime"></label>
+        <input asp-for="EndTime" type="datetime-local" />
+        <span asp-validation-for="EndTime"></span>
+    </div>
+
+    <div>
+        <label asp-for="MaxParticipants"></label>
+        <input asp-for="MaxParticipants" />
+        <span asp-validation-for="MaxParticipants"></span>
+    </div>
+
+    <button type="submit">Create Class</button>
+</form>
