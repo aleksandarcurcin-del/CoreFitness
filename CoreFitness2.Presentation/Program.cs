@@ -1,8 +1,9 @@
-using CoreFitness2.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using CoreFitness2.Infrastructure.Extensions;
 using CoreFitness2.Application;
+using CoreFitness2.Infrastructure.Data;
+using CoreFitness2.Infrastructure.Extensions;
 using CoreFitness2.Infrastructure.Seeds;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,8 +43,11 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
     await MembershipSeeder.SeedAsync(context);
     await GymClassSeeder.SeedAsync(context);
+    await RoleSeeder.SeedAsync(roleManager);
 }
 
 app.Run();
