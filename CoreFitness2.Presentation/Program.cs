@@ -1,6 +1,7 @@
 using CoreFitness2.Application;
 using CoreFitness2.Infrastructure.Data;
 using CoreFitness2.Infrastructure.Extensions;
+using CoreFitness2.Infrastructure.Identity;
 using CoreFitness2.Infrastructure.Seeds;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,10 +45,12 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
     await MembershipSeeder.SeedAsync(context);
     await GymClassSeeder.SeedAsync(context);
     await RoleSeeder.SeedAsync(roleManager);
+    await AdminSeeder.SeedAdminAsync(userManager, roleManager);
 }
 
 app.Run();
