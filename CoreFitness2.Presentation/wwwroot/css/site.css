@@ -1440,7 +1440,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .fitness-center-card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     background-color: #FFFFFF;
     border-radius: 24px;
     overflow: hidden;
@@ -1453,6 +1453,11 @@ h1, h2, h3, h4, h5, h6, p {
     object-fit: cover;
     min-height: 320px;
     display: block;
+}
+
+.fitness-btn {
+    display: inline-flex;
+    max-width: 210px;
 }
 
 .fitness-center-body {
