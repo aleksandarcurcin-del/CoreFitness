@@ -1,0 +1,40 @@
+﻿@model CoreFitness2.Presentation.ViewModels.Account.VerifyExternalLoginViewModel
+
+<section class="verify-email">
+    <div class="verify-card">
+        <h1>Verify your email</h1>
+
+        <p class="verify-text">
+            A verification code has been sent to <strong>aleksandar.davidovcurcin@gmail.com</strong>.
+            Enter the code below to continue.
+        </p>
+
+        <p class="demo-code">Demo code: <strong>123456</strong></p>
+
+        <div class="divider"></div>
+
+        <form asp-controller="Account" asp-action="VerifyExternalLogin" method="post" class="verify-email-form">
+            @Html.AntiForgeryToken()
+
+            <input asp-for="Email" type="hidden" />
+            <input asp-for="ReturnUrl" type="hidden" />
+
+            <div class="field">
+                <label asp-for="Code">Verification code:</label>
+                <input asp-for="Code" placeholder="Enter verification code" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+
+            <p class="verify-email-terms">
+                By verifying, you agree to our
+                <a href="#">terms of service</a> and
+                <a href="#">privacy policy</a>.
+            </p>
+
+            <button class="btn btn--primary btn--full" type="submit">
+                <span class="btn__text">Verify</span>
+                <span class="btn__icon">›</span>
+            </button>
+        </form>
+    </div>
+</section>
