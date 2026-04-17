@@ -27,7 +27,7 @@ public class AuthGateway : IAuthGateway
         return schemes.Select(x => x.Name).ToList();
     }
 
-    public async Task<ExternalUserInfo> GetExternalUserInfoAsync()
+    public async Task<ExternalUserInfo?> GetExternalUserInfoAsync()
     {
         var info = await _signInManager.GetExternalLoginInfoAsync();
         if (info is null)
