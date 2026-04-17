@@ -11,7 +11,7 @@ public interface IAuthGateway
     Task SignOutAsync();
 
     Task<IReadOnlyList<string>> GetExternalProvidersAsync();
-    Task<ExternalUserInfo> GetExternalUserInfoAsync();
+    Task<ExternalUserInfo?> GetExternalUserInfoAsync();
     Task<AuthenticationResult> ExternalLoginSignInAsync(ExternalUserInfo externalUserInfo, string? returnUrl = null);
     Task<(ServiceResult Result, string? ApplicationUserId)> CreateExternalIdentityUserAsync(ExternalUserInfo externalUserInfo);
     Task<ServiceResult> LinkExternalLoginAsync(string email, ExternalUserInfo externalUserInfo);
