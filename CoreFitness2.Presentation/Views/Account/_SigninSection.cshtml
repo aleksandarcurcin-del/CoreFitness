@@ -24,6 +24,7 @@
                     @if (Model.ExternalProviders.Any())
                     {
                         <form asp-controller="Account" asp-action="ExternalLogin" method="post">
+                             @Html.AntiForgeryToken()
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
 
                             @foreach (var provider in Model.ExternalProviders)
