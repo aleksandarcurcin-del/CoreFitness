@@ -23,9 +23,15 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult Signup()
+    public async Task<IActionResult> Signup(string? returnUrl = null)
     {
-        return View(new SignUpViewModel());
+        var providers = await _authService.GetExternalProvidersAsync();
+
+        return View(new SignUpViewModel
+        {
+            ReturnUrl = returnUrl,
+            ExternalProviders = [.. providers]
+        });
     }
 
     [HttpPost]
