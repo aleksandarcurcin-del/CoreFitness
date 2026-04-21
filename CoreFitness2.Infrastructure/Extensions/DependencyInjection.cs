@@ -30,6 +30,14 @@ public static class DependencyInjection
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
+        services.AddAuthentication()
+        .AddGoogle(options =>
+        {
+            options.ClientId = configuration["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Google ClientId is not configured.");
+            options.ClientSecret = configuration["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Google ClientSecret is not configured.");
+
+        });
+
         services.AddScoped<IAuthGateway, AuthGateway>();
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IUserAccountGateway, UserAccountGateway>();
