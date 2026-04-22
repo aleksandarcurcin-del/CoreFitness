@@ -41,6 +41,7 @@ public static class DependencyInjection
         {
             options.ClientId = configuration["Authentication:GitHub:ClientId"] ?? throw new InvalidOperationException("GitHub ClientId is not configured.");
             options.ClientSecret = configuration["Authentication:GitHub:ClientSecret"] ?? throw new InvalidOperationException("GitHub ClientSecret is not configured.");
+            options.Scope.Add("user:email");
         });
 
         services.AddScoped<IAuthGateway, AuthGateway>();
