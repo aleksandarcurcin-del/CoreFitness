@@ -3,12 +3,14 @@ using CoreFitness2.Infrastructure.Data;
 using CoreFitness2.Infrastructure.Extensions;
 using CoreFitness2.Infrastructure.Identity;
 using CoreFitness2.Infrastructure.Seeds;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+});
 
 
 // Add services to the container.
