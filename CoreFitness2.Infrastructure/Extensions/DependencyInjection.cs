@@ -36,6 +36,11 @@ public static class DependencyInjection
             options.ClientId = configuration["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Google ClientId is not configured.");
             options.ClientSecret = configuration["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Google ClientSecret is not configured.");
 
+        })
+        .AddGitHub(options =>
+        {
+            options.ClientId = configuration["Authentication:GitHub:ClientId"] ?? throw new InvalidOperationException("GitHub ClientId is not configured.");
+            options.ClientSecret = configuration["Authentication:GitHub:ClientSecret"] ?? throw new InvalidOperationException("GitHub ClientSecret is not configured.");
         });
 
         services.AddScoped<IAuthGateway, AuthGateway>();
