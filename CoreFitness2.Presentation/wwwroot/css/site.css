@@ -2018,6 +2018,143 @@ h1, h2, h3, h4, h5, h6, p {
     line-height: 1;
 }
 
+
+
+
+/********** GROUP TRAINING PAGE **********/
+
+.group-training-hero {
+    padding-block: 80px 40px;
+}
+
+.group-training-hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.group-training-label {
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.group-training-title {
+    font-size: 48px;
+    font-weight: 600;
+    color: #27252F;
+    margin-bottom: 20px;
+}
+
+.group-training-intro {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #7A7A7A;
+}
+
+.group-training-section {
+    padding-block: 40px 100px;
+}
+
+.group-training-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.group-training-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.group-training-image {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.group-training-body {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+}
+
+.group-training-category {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.group-training-body h2 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #27252F;
+    margin: 0;
+}
+
+.group-training-description {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #7A7A7A;
+    margin: 0;
+}
+
+.group-training-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #27252F;
+    font-size: 15px;
+}
+
+.group-training-body .btn--fit {
+    align-self: flex-start;
+}
+
+@media (max-width: 991px) {
+    .group-training-card {
+        grid-template-columns: 1fr;
+    }
+
+    .group-training-body {
+        padding: 28px;
+    }
+
+    .group-training-title {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 768px) {
+    .group-training-hero {
+        padding-block: 60px 30px;
+    }
+
+    .group-training-title {
+        font-size: 32px;
+    }
+
+    .group-training-intro {
+        font-size: 16px;
+    }
+
+    .group-training-body h2 {
+        font-size: 24px;
+    }
+}
+
 /********** FOOTER **********/
 
 .footer-bg-color {
