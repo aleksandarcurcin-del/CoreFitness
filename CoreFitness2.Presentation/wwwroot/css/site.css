@@ -2155,6 +2155,142 @@ h1, h2, h3, h4, h5, h6, p {
     }
 }
 
+
+
+/****** PADEL PAGE *****/
+
+.padel-hero {
+    padding-block: 80px 40px;
+}
+
+.padel-hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.padel-label {
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.padel-title {
+    font-size: 48px;
+    font-weight: 600;
+    color: #27252F;
+    margin-bottom: 20px;
+}
+
+.padel-intro {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #7A7A7A;
+}
+
+.padel-section {
+    padding-block: 40px 100px;
+}
+
+.padel-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.padel-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.padel-image {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.padel-body {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+}
+
+.padel-category {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.padel-body h2 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #27252F;
+    margin: 0;
+}
+
+.padel-description {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #7A7A7A;
+    margin: 0;
+}
+
+.padel-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #27252F;
+    font-size: 15px;
+}
+
+.padel-body .btn--fit {
+    align-self: flex-start;
+}
+
+@media (max-width: 991px) {
+    .padel-card {
+        grid-template-columns: 1fr;
+    }
+
+    .padel-body {
+        padding: 28px;
+    }
+
+    .padel-title {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 768px) {
+    .padel-hero {
+        padding-block: 60px 30px;
+    }
+
+    .padel-title {
+        font-size: 32px;
+    }
+
+    .padel-intro {
+        font-size: 16px;
+    }
+
+    .padel-body h2 {
+        font-size: 24px;
+    }
+}
+
 /********** FOOTER **********/
 
 .footer-bg-color {
