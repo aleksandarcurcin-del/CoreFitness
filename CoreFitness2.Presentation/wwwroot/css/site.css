@@ -719,11 +719,28 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .membership-flex {
-    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 40px;
-    justify-content: center;
-    align-items: stretch;
-    margin-block: 60px;
+}
+
+.membership-card-content,
+.membership-card-content3,
+.card-bg-color,
+.card-grid {
+    width: 100%;
+    max-width: 400px;
+}
+
+@media (min-width: 1200px) {
+    .membership-flex {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        justify-content: center;
+        align-items: stretch;
+        margin-block: 60px;
+    }
 }
 
 .membership-card-content {
@@ -902,7 +919,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .h3-48px {
-    font-size: 48px;
+    font-size: clamp(32px, 7vw, 48px);
     color: #27252F;
     font-weight: 500;
 }
@@ -2558,5 +2575,67 @@ h1, h2, h3, h4, h5, h6, p {
 
     .footer-center-right {
         text-align: right;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.faq {
+    padding-block: 60px;
+}
+
+.faq-grid {
+    gap: 32px;
+}
+
+.faq-left {
+    display: none;
+}
+
+.h3-48px {
+    font-size: clamp(32px, 7vw, 48px);
+    text-align: center;
+}
+
+.accordion {
+    width: 100%;
+}
+
+.accordion-toggle {
+    padding: 16px;
+    font-size: 15px;
+}
+
+.accordion-panel {
+    padding: 0 16px 16px;
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+    .faq {
+        padding-block: 100px;
+    }
+
+    .faq-left {
+        display: block;
+    }
+
+    .faq-grid {
+        gap: 56px;
+    }
+
+    .h3-48px {
+        text-align: left;
+    }
+
+    .accordion {
+        min-width: 600px;
     }
 }
