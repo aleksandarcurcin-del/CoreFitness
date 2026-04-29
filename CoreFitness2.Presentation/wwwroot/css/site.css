@@ -1199,7 +1199,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .menu-card__header {
-    background: #D6EB31; /* lime */
+    background: #D6EB31;
     color: #27252F;
     font-weight: 600;
     padding: 14px 16px;
@@ -1422,19 +1422,13 @@ h1, h2, h3, h4, h5, h6, p {
 
 
 .stats {
-    display: grid;
-    grid-template-columns: 732px;
-    gap: 18px;
-    margin-bottom: 50px;
-    padding: 30px;
-    background-color: #ffffff;
-    width: 790px;
-    border-radius: 20px;
-    position: relative;
-    left: 500px;
+    display: none;
+
 }
 
-
+.card__title-lower {
+    display: none;
+}
 
 .stat__top {
     display: flex;
@@ -2637,5 +2631,114 @@ h1, h2, h3, h4, h5, h6, p {
 
     .accordion {
         min-width: 600px;
+    }
+}
+
+
+
+
+
+
+.about-me-h1 {
+    font-size: clamp(32px, 7vw, 48px);
+}
+
+.about-me-flex {
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+}
+
+.about-me-left {
+    width: 100%;
+    max-width: 404px;
+}
+
+.about-me-right {
+    width: 100%;
+    padding: 20px;
+}
+
+.menu-card {
+    width: 100%;
+    max-width: 280px;
+}
+
+.profile-image-preview img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
+.profile-page__wrap {
+    width: 100%;
+    max-width: 560px;
+}
+
+.card {
+    padding: 20px;
+}
+
+.card__title,
+.card__title-lower {
+    font-size: clamp(32px, 8vw, 56px);
+}
+
+.card__title-lower {
+    left: 0;
+}
+
+.card__divider {
+    width: 100%;
+}
+
+.upload {
+    height: auto;
+    min-height: 60px;
+    gap: 10px;
+}
+
+.upload__btn {
+    padding: 10px 18px;
+}
+
+.form-actions {
+    justify-content: center;
+}
+
+
+@media (min-width: 1024px) {
+    .about-me-flex {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap:80px;
+    }
+
+    .card__title-lower {
+        display: block;
+        left: 30px;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: 732px;
+        gap: 18px;
+        margin-bottom: 50px;
+        padding: 30px;
+        background-color: #ffffff;
+        width: 790px;
+        border-radius: 20px;
+        position: relative;
+        left: 500px;
+    }
+
+    .about-me-right {
+        padding: 30px;
+    }
+
+    .form-actions {
+        justify-content: flex-end;
     }
 }
