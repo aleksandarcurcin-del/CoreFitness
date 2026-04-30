@@ -15,5 +15,4 @@ public interface IAuthGateway
     Task<AuthenticationResult> ExternalLoginSignInAsync(ExternalUserInfo externalUserInfo, string? returnUrl = null);
     Task<(ServiceResult Result, string? ApplicationUserId)> CreateExternalIdentityUserAsync(ExternalUserInfo externalUserInfo);
     Task<ServiceResult> LinkExternalLoginAsync(string email, ExternalUserInfo externalUserInfo);
-    Task<bool> EmailExistsAsync(string email);
 }

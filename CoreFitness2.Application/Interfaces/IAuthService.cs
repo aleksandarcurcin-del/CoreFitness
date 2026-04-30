@@ -12,5 +12,4 @@ public interface IAuthService
     Task<IReadOnlyList<string>> GetExternalProvidersAsync();
     Task<AuthenticationResult> HandleExternalLoginCallbackAsync(string? returnUrl = null, string? remoteError = null);
     Task<AuthenticationResult> VerifyExternalLoginAsync(string code, string? returnUrl = null);
-    Task<ServiceResult> ValidateSignupEmailAsync(string email);
 }
